@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+
+html, body, #root, #__next {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Mencegah scrollbar horizontal jika ada konten melebihi lebar */
+  box-sizing: border-box; /* Memastikan padding dan border termasuk dalam total lebar/tinggi elemen */
+}
+
+body {
+  /* Hapus atau override gaya pemusatan yang mungkin ada */
+  /* Ini adalah bagian penting untuk menghilangkan efek "tertahan" di tengah */
+  display: block !important; /* Menimpa display: flex atau display: grid yang mungkin memusatkan konten */
+  place-items: unset !important; /* Menimpa place-items: center */
+  justify-content: unset !important; /* Menimpa justify-content */
+  align-items: unset !important; /* Menimpa align-items */
+  
+  /* Gaya dasar yang diinginkan */
+  font-family: 'Inter', sans-serif; /* Pastikan font Inter dimuat dari Google Fonts atau serupa */
+  /* Transisi warna untuk dark mode */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Pastikan elemen root React (tempat aplikasi dirender) juga diatur dengan benar */
+/* Untuk Create React App, ini biasanya #root */
+/* Untuk Next.js, ini biasanya #__next */
+#root, #__next {
+  display: flex; /* Menggunakan flexbox agar konten di dalamnya bisa menumpuk vertikal */
+  flex-direction: column; /* Menumpuk konten secara kolom */
+}
+
+/* Reset margin dan padding default browser untuk semua elemen */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* --- Animasi (dari kode React, perlu didefinisikan di CSS global) --- */
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+.animate-blob {
+  animation: blob 7s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+.animation-delay-2000 { animation-delay: 2s; }
+.animation-delay-4000 { animation-delay: 4s; }
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
