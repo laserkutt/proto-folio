@@ -1,7 +1,13 @@
-// src/App.jsx atau pages/index.jsx (Next.js)
 
 import React, { useState, useEffect, useRef } from 'react';
-import "./App.css"
+import { gsap } from 'gsap'; // Impor GSAP
+import { ScrollTrigger } from 'gsap/ScrollTrigger'; // Impor ScrollTrigger
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'; // Impor ScrollToPlugin untuk animasi scroll
+import "./App.css";
+// Register GSAP plugins (penting untuk ScrollTrigger dan ScrollToPlugin)
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+// Main App Component
 const App = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -18,7 +24,8 @@ const App = () => {
     setActiveSection(section);
     const element = document.getElementById(section);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Animasi scroll halus menggunakan GSAP ScrollToPlugin
+      gsap.to(window, { duration: 1, scrollTo: { y: element, offsetY: 0 }, ease: "power2.inOut" });
     }
   };
 
@@ -27,28 +34,28 @@ const App = () => {
     // Pastikan div ini juga full width, yang sudah diatur oleh min-h-screen
     <div className={`min-h-screen flex flex-col font-inter ${isDarkMode ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-800'}`}>
       {/* Header and Navigation */}
-      <header className={`sticky top-0 z-50 p-4 shadow-md ${isDarkMode ? 'bg-gray-800' : 'bg-white'} w-full`}>
+      <header className={`sticky top-0 z-50 p-4 shadow-xl border-b border-gray-700/50 ${isDarkMode ? 'bg-gray-800' : 'bg-white'} w-full`}> {/* Shadow lebih besar, border bawah halus */}
         {/* Nav Container: Hapus 'container mx-auto' untuk full width, tambahkan padding internal */}
         <nav className="flex justify-between items-center px-4 md:px-8 w-full">
           {/* Ubah ukuran logo/judul agar lebih menonjol */}
-          <div className="text-3xl md:text-4xl font-extrabold text-yellow-400">Lionel.dev</div> {/* Warna kuning untuk logo */}
+          <div className="text-3xl md:text-4xl font-extrabold text-indigo-600">Lionel.dev</div> {/* Warna kuning untuk logo */}
           <ul className="flex space-x-2 md:space-x-6 items-center"> {/* space-x-2 for mobile, space-x-6 for md+ */}
             <li>
               {/* Tombol Navigasi: Tanpa background default, kuning saat hover */}
-              <button onClick={() => navigateTo('home')} className="px-3 py-2 rounded-md transition-colors duration-300 font-medium text-gray-200 dark:text-gray-300 hover:bg-yellow-400 dark:hover:bg-yellow-600 hover:text-gray-900 dark:hover:text-gray-900">Beranda</button>
+              <button onClick={() => navigateTo('home')} className="px-3 py-2 rounded-md transition-colors duration-300 font-medium text-gray-200 dark:text-gray-300 hover:bg-yellow-400 dark:hover:bg-yellow-600 hover:text-gray-900 dark:hover:text-gray-900 bg-transparent border-transparent appearance-none focus:outline-none focus:ring-0">Beranda</button>
             </li>
             <li>
-              <button onClick={() => navigateTo('about')} className="px-3 py-2 rounded-md hover:bg-yellow-400 dark:hover:bg-yellow-600 transition-colors duration-300 font-medium text-gray-200 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-900">Tentang Saya</button>
+              <button onClick={() => navigateTo('about')} className="px-3 py-2 rounded-md hover:bg-yellow-400 dark:hover:bg-yellow-600 transition-colors duration-300 font-medium text-gray-200 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-900 bg-transparent border-transparent appearance-none focus:outline-none focus:ring-0">Tentang Saya</button>
             </li>
             <li>
-              <button onClick={() => navigateTo('projects')} className="px-3 py-2 rounded-md hover:bg-yellow-400 dark:hover:bg-yellow-600 transition-colors duration-300 font-medium text-gray-200 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-900">Proyek</button>
+              <button onClick={() => navigateTo('projects')} className="px-3 py-2 rounded-md hover:bg-yellow-400 dark:hover:bg-yellow-600 transition-colors duration-300 font-medium text-gray-200 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-900 bg-transparent border-transparent appearance-none focus:outline-none focus:ring-0">Proyek</button>
             </li>
             <li>
-              <button onClick={() => navigateTo('contact')} className="px-3 py-2 rounded-md hover:bg-yellow-400 dark:hover:bg-yellow-600 transition-colors duration-300 font-medium text-gray-200 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-900">Kontak</button>
+              <button onClick={() => navigateTo('contact')} className="px-3 py-2 rounded-md hover:bg-yellow-400 dark:hover:bg-yellow-600 transition-colors duration-300 font-medium text-gray-200 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-900 bg-transparent border-transparent appearance-none focus:outline-none focus:ring-0">Kontak</button>
             </li>
-            <li>
+            <li className="ml-4"> {/* Tambah margin kiri untuk pemisah visual */}
               {/* Tombol Dark Mode: Tanpa background default, kuning saat hover */}
-              <button onClick={toggleDarkMode} className="p-2 rounded-full transition-colors duration-300 shadow-sm hover:bg-yellow-400 dark:hover:bg-yellow-600">
+              <button onClick={toggleDarkMode} className="p-2 rounded-full transition-colors duration-300 shadow-sm hover:bg-yellow-400 dark:hover:bg-yellow-600 bg-transparent border-transparent appearance-none focus:outline-none focus:ring-0">
                 {isDarkMode ? (
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-sun text-gray-200 dark:text-gray-300 group-hover:text-gray-900"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M6.34 17.66l-1.41 1.41"/><path d="M19.07 4.93l-1.41 1.41"/></svg>
                 ) : (
@@ -95,33 +102,48 @@ const HeroSection = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(150); // Kecepatan ketik
 
+  const heroTitleRef = useRef(null);
+  const heroSubtitleRef = useRef(null);
+  const heroDescriptionRef = useRef(null);
+  const heroButtonRef = useRef(null);
+
   useEffect(() => {
-    const handleTyping = () => {
+    let timeoutId; // Untuk menyimpan ID timeout
+
+    const type = () => {
       const currentRole = roles[currentRoleIndex];
       if (isDeleting) {
-        // Menghapus teks
-        setDisplayedText(prev => prev.substring(0, prev.length - 1));
-        setTypingSpeed(75); // Lebih cepat saat menghapus
+        setDisplayedText(prev => currentRole.substring(0, prev.length - 1));
+        timeoutId = setTimeout(type, 75); // Kecepatan menghapus
       } else {
-        // Mengetik teks
         setDisplayedText(prev => currentRole.substring(0, prev.length + 1));
-        setTypingSpeed(150); // Lebih lambat saat mengetik
+        timeoutId = setTimeout(type, 150); // Kecepatan mengetik
       }
 
       if (!isDeleting && displayedText === currentRole) {
-        // Jika selesai mengetik, tunggu sebentar lalu mulai menghapus
-        setTimeout(() => setIsDeleting(true), 1000);
+        timeoutId = setTimeout(() => setIsDeleting(true), 1000); // Tunggu sebelum menghapus
       } else if (isDeleting && displayedText === '') {
-        // Jika selesai menghapus, pindah ke peran berikutnya
         setIsDeleting(false);
         setCurrentRoleIndex(prev => (prev + 1) % roles.length);
+        timeoutId = setTimeout(type, 500); // Tunggu sebelum mulai mengetik peran baru
       }
     };
 
-    const typingInterval = setInterval(handleTyping, typingSpeed);
+    // Mulai animasi ketik hanya sekali saat komponen pertama kali dimuat
+    // atau ketika roles/currentRoleIndex berubah (untuk transisi antar peran)
+    if (roles.length > 0) {
+      type();
+    }
 
-    return () => clearInterval(typingInterval);
-  }, [displayedText, isDeleting, currentRoleIndex, roles, typingSpeed]);
+    // Animasi GSAP saat komponen dimuat
+    gsap.fromTo(heroTitleRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, ease: "back.out(1.7)" });
+    gsap.fromTo(heroSubtitleRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, delay: 0.2, ease: "back.out(1.7)" });
+    gsap.fromTo(heroDescriptionRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, delay: 0.4, ease: "back.out(1.7)" });
+    gsap.fromTo(heroButtonRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, delay: 0.6, ease: "back.out(1.7)" });
+
+
+    return () => clearTimeout(timeoutId); // Bersihkan timeout saat komponen unmount
+  }, [currentRoleIndex, isDeleting]); // Dependency array hanya untuk kontrol typing flow
 
   return (
     <section id="home" className="relative h-screen flex items-center justify-center text-center overflow-hidden w-full">
@@ -132,25 +154,19 @@ const HeroSection = () => {
         <div className="w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
       </div>
 
-      {/* Hero Content: Kotak biru transparan dihilangkan, sekarang hanya padding dan max-width untuk teks */}
-      {/* mx-auto pada div ini akan memusatkan konten di dalam section yang full width */}
-      <div className="relative z-10 p-8 rounded-lg w-full max-w-7xl mx-auto"> {/* Hapus bg-blue-900 bg-opacity-30 */}
-        {/* Mengembalikan warna kuning pada nama Lionel, menghilangkan gradien */}
-        {/* Menyesuaikan ukuran font untuk resolusi menengah dan besar */}
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold mb-4 leading-tight"> {/* text-5xl (default), md:text-7xl (768px+), lg:text-8xl (1024px+) */}
-          Halo, saya <span className="text-yellow-400">Lionel</span> {/* Kembali ke warna kuning */}
+      {/* Hero Content */}
+      <div className="relative z-10 p-8 rounded-lg w-full max-w-7xl mx-auto">
+        <h1 ref={heroTitleRef} className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold mb-4 leading-tight"> {/* Ukuran font responsif */}
+          Halo, saya <span className="text-yellow-400">Lionel</span>
         </h1>
-        {/* Mengembalikan warna kuning pada teks yang berubah */}
-        {/* Menyesuaikan ukuran font untuk resolusi menengah dan besar */}
-        <p className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-8"> {/* text-3xl (default), md:text-4xl (768px+), lg:text-5xl (1024px+) */}
-          Seorang <span className="text-yellow-400">{displayedText}</span><span className="animate-blink">|</span> {/* Kembali ke warna kuning */}
+        <p ref={heroSubtitleRef} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-8"> {/* Ukuran font responsif */}
+          Seorang <span className="text-yellow-400">{displayedText}</span><span className="animate-blink">|</span>
         </p>
-        {/* Menjadikan teks deskripsi lebih simetris dan terpusat */}
-        {/* Menggunakan `max-w-4xl` untuk membuatnya sedikit lebih lebar dari `max-w-3xl` sebelumnya */}
-        <p className="text-lg md:text-xl max-w-full mb-10 px-4 text-center"> {/* max-w-full agar mengisi lebar parent, px-4 untuk padding internal */}
+        <p ref={heroDescriptionRef} className="text-base sm:text-lg md:text-xl max-w-full mb-10 px-4 text-center"> {/* Ukuran font responsif, max-w-4xl */}
           Mengubah ide-ide kompleks menjadi pengalaman web yang intuitif dan indah. Mari jelajahi karya-karya saya!
         </p>
         <button
+          ref={heroButtonRef}
           onClick={() => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' })}
           className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition-transform duration-300 hover:scale-105"
         >
@@ -163,6 +179,19 @@ const HeroSection = () => {
 
 // About Me Section Component
 const AboutSection = () => {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    gsap.fromTo(sectionRef.current, { opacity: 0, y: 30 }, { // Ubah y: 50 ke y: 30, ease: "back.out(1.7)"
+      opacity: 1, y: 0, duration: 1, ease: "back.out(1.7)",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 80%", // Mulai animasi saat 80% bagian atas section terlihat
+        toggleActions: "play none none none"
+      }
+    });
+  }, []);
+
   const skills = [
     { name: 'HTML', icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-code"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> },
     { name: 'CSS', icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-palette"><circle cx="12" cy="12" r="10"/><path d="M17 12a5 5 0 1 0-5 5V7a5 5 0 1 0 5 5Z"/></svg> },
@@ -174,10 +203,10 @@ const AboutSection = () => {
   ];
 
   return (
-    <section id="about" className="py-20 px-4 md:px-8 w-full"> {/* Hapus bg-gray-800 dark:bg-gray-950 */}
+    <section id="about" ref={sectionRef} className="py-20 px-4 md:px-8 w-full opacity-0"> {/* Tambah opacity-0 untuk animasi awal */}
       <h2 className="text-4xl font-bold text-center mb-12 text-indigo-600">Tentang Saya</h2>
       {/* Konten di dalam About Section: Hapus max-w-6xl mx-auto agar bisa melar penuh */}
-      <div className="flex flex-col md:flex-row items-center md:space-x-12 w-full"> {/* Hapus max-w-6xl mx-auto */}
+      <div className="flex flex-col md:flex-row items-center md:space-x-12 w-full">
         <div className="md:w-1/3 mb-8 md:mb-0">
           {/* Placeholder for Lionel's photo */}
           <img
@@ -215,6 +244,19 @@ const AboutSection = () => {
 
 // Projects Section Component
 const ProjectsSection = () => {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    gsap.fromTo(sectionRef.current, { opacity: 0, y: 30 }, { // Ubah y: 50 ke y: 30, ease: "back.out(1.7)"
+      opacity: 1, y: 0, duration: 1, ease: "back.out(1.7)",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 80%",
+        toggleActions: "play none none none"
+      }
+    });
+  }, []);
+
   const projects = [
     {
       id: 1,
@@ -247,10 +289,10 @@ const ProjectsSection = () => {
   ];
 
   return (
-    <section id="projects" className="py-20 px-4 md:px-8 w-full"> {/* Hapus bg-gray-800 dark:bg-gray-950 */}
+    <section id="projects" ref={sectionRef} className="py-20 px-4 md:px-8 w-full opacity-0"> {/* Tambah opacity-0 untuk animasi awal */}
       <h2 className="text-4xl font-bold text-center mb-12 text-indigo-600">Proyek Unggulan</h2>
       {/* Projects Grid: Hapus max-w-6xl mx-auto agar bisa melar penuh */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full"> {/* Hapus max-w-6xl mx-auto */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
         {projects.map((project) => (
           <div key={project.id} className="relative rounded-lg overflow-hidden shadow-lg group transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
             <img
@@ -281,6 +323,19 @@ const ProjectsSection = () => {
 
 // Contact Section Component
 const ContactSection = () => {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    gsap.fromTo(sectionRef.current, { opacity: 0, y: 30 }, { // Ubah y: 50 ke y: 30, ease: "back.out(1.7)"
+      opacity: 1, y: 0, duration: 1, ease: "back.out(1.7)",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 80%",
+        toggleActions: "play none none none"
+      }
+    });
+  }, []);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -306,10 +361,10 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-20 px-4 md:px-8 w-full"> {/* Hapus bg-gray-800 dark:bg-gray-950 */}
+    <section id="contact" ref={sectionRef} className="py-20 px-4 md:px-8 w-full opacity-0"> {/* Tambah opacity-0 untuk animasi awal */}
       <h2 className="text-4xl font-bold text-center mb-12 text-indigo-600">Kontak Saya</h2>
       {/* Contact Card: Tetap batasi max-w-xl dan mx-auto agar form nyaman diisi */}
-      <div className="max-w-xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
+      <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg"> {/* Ubah max-w-xl ke max-w-2xl */}
         <p className="text-center mb-8 text-lg">
           Tertarik untuk berkolaborasi atau hanya ingin menyapa? Jangan ragu untuk menghubungi saya!
         </p>
